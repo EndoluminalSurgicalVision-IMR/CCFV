@@ -20,7 +20,7 @@ Official implementation of MICCAI 2023 paper "Pick The Best Pre-trained Model: T
 2. Preprocess the data using [nnUNet](https://github.com/MIC-DKFZ/nnUNet)
 
 ## Checkpoint Download
-You can download our pretrained checkpoing of unet
+You can download our pretrained checkpoint of unet
 and unetr at [here](https://www.aliyundrive.com/s/DzqA2aZzsLa)
 
 Code:n17v
