@@ -17,7 +17,7 @@ Official implementation of MICCAI 2023 Paper "Pick The Best Pre-trained Model: T
 
 ## Checkpoint Download
 You can download our pretrained checkpoing of unet
-and unetr at here [here](https://www.aliyundrive.com/s/DzqA2aZzsLa)
+and unetr at [here](https://www.aliyundrive.com/s/DzqA2aZzsLa)
 
 Code:n17v
 
