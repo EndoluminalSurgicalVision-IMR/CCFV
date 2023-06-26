@@ -1,8 +1,12 @@
 # MICCAI2023_CCFV
 
-<img src="Figs/Framework.png" width = "980" height = "500" alt="" align=center />
+<img src="Figs/Framework.png" width = "980" height = "480" alt="" align=center />
 
-Official implementation of MICCAI 2023 Paper "Pick The Best Pre-trained Model: Towards Transferability Estimation For Medical Image Segmentation"
+# Introduction
+
+Official implementation of MICCAI 2023 paper "Pick The Best Pre-trained Model: Towards Transferability Estimation For Medical Image Segmentation"(**early accepted, 14%**)
+
+
 # Preparation
 ## Environment Setup
     python=3.7
