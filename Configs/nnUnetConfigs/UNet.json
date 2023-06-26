@@ -1,0 +1,71 @@
+{
+    "layers": ["seg_outputs.0", "seg_outputs.1", "seg_outputs.2"],
+    "sample_num": {"seg_outputs.0": 100, "seg_outputs.1": 200, "seg_outputs.2": 400},
+    "model": {
+        "name": "S4D2W64",
+        "num_input_channels": 1,
+        "base_num_features": 64,
+        "num_pool": 3,
+        "conv_per_stage": 2,
+        "deep_supervision": true,
+        "dropout_in_localization": false,
+        "num_pool_per_axis": [
+            3,
+            3,
+            3
+        ],
+        "pool_op_kernel_sizes": [
+            [
+                2,
+                2,
+                2
+            ],
+            [
+                2,
+                2,
+                2
+            ],
+            [
+                2,
+                2,
+                2
+            ]
+        ],
+        "conv_kernel_sizes": [
+            [
+                3,
+                3,
+                3
+            ],
+            [
+                3,
+                3,
+                3
+            ],
+            [
+                3,
+                3,
+                3
+            ],
+            [
+                3,
+                3,
+                3
+            ]
+        ],
+        "max_num_features": 512
+    },
+    "num_classes": 1,
+    "roi_x": 112,
+    "roi_y": 144,
+    "roi_z": 64,
+    "lower_bound": -41.0,
+    "upper_bound": 176.0,
+    "mean": 99.29733276367188,
+    "std": 39.32528305053711,
+    "sw_batch_size": 2,
+    "window_mode": "gaussian",
+    "randcrop_sample_size": 2,
+    "rand_bg": false,
+    "infer_overlap": 0.0
+}

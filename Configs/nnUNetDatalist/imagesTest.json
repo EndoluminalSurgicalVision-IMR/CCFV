@@ -1,0 +1,14 @@
+{
+    "val": [
+        {
+            "data": "Data/imagesTr_preprocessed/spleen_0.nii.gz",
+            "seg": "Data/labelsTr_preprocessed/spleen_1.nii.gz"
+        },
+        {
+            "data": "Data/imagesTr_preprocessed/spleen_0.nii.gz",
+            "seg": "Data/labelsTr_preprocessed/spleen_1.nii.gz"
+        }
+    ],
+
+    "fold_id": 0
+}
