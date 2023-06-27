@@ -2,9 +2,6 @@ import argparse
 import numpy as np
 import json
 import torch
-import json
-
-import torch
 from utils.sliding_window_sampling import ms_sliding_window_sampling
 from utils.get_model import get_model
 from utils.ccfv import cal_variety, cal_w_distance
