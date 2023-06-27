@@ -20,36 +20,28 @@ def evaluate(configs, test_loader, model):
             try:
                 val_data["data"] = val_data["data"].permute(
                     0, 1, 4, 3, 2).cuda()
-                data_device = "cuda"
             except RuntimeError as e:     # cuda out of memory
-                print(
-                    "cuda out of memory occurred! Try to transfer the data to cpu!")
-                val_data["data"] = val_data["data"].permute(
-                    0, 1, 4, 3, 2).to(torch.device('cpu'))
-                data_device = "cpu"
-
+                print("cuda out of memory occurred! Try to transfer the data to cpu!")
             """inference"""
-            if data_device == "cuda":
-                # import pdb; pdb.set_trace()
-                data_seg = val_data["seg"].permute(0, 1, 4, 3, 2).cuda()
-                data_seg = torch.nn.functional.interpolate(
-                    val_data['seg'], size=val_data["data"].shape[2:], mode="nearest")
-                layers = configs['layers']
-                feature_dict = ms_sliding_window_sampling(layers, configs["sample_num"],
-                                                          val_data["data"], data_seg, [configs['roi_z'],
-                                                                                       configs['roi_y'], configs['roi_x']],
-                                                          configs['sw_batch_size'],
-                                                          model,
-                                                          overlap=configs['infer_overlap'], mode=configs[
-                    'window_mode'])
-                for layer in class_feature_dict.keys():
-                    global_feat = np.concatenate(
-                        [feat for feat in feature_dict[layer].values()], axis=0)
-                    global_feat = np.mean(global_feat, axis=0)
-                    global_feat_dict[layer].append(global_feat)
-                    for lb in class_feature_dict[layer].keys():
-                        class_feature_dict[layer][lb].append(
-                            feature_dict[layer][lb])
+            data_seg = val_data["seg"].permute(0, 1, 4, 3, 2).cuda()
+            data_seg = torch.nn.functional.interpolate(
+                val_data['seg'], size=val_data["data"].shape[2:], mode="nearest")
+            layers = configs['layers']
+            feature_dict = ms_sliding_window_sampling(layers, configs["sample_num"],
+                                                        val_data["data"], data_seg, [configs['roi_z'],
+                                                                                    configs['roi_y'], configs['roi_x']],
+                                                        configs['sw_batch_size'],
+                                                        model,
+                                                        overlap=configs['infer_overlap'], mode=configs[
+                'window_mode'])
+            for layer in class_feature_dict.keys():
+                global_feat = np.concatenate(
+                    [feat for feat in feature_dict[layer].values()], axis=0)
+                global_feat = np.mean(global_feat, axis=0)
+                global_feat_dict[layer].append(global_feat)
+                for lb in class_feature_dict[layer].keys():
+                    class_feature_dict[layer][lb].append(
+                        feature_dict[layer][lb])
     ccfv = 0
     for layer in class_feature_dict.keys():
         w_distance = 0.0
