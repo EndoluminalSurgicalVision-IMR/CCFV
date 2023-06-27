@@ -5,54 +5,10 @@ import torch
 import json
 
 import torch
-from scipy.linalg import sqrtm
 from utils.sliding_window_sampling import ms_sliding_window_sampling
 from utils.get_model import get_model
-
-from monai.transforms import (
-    Compose,
-    LoadImaged,
-    NormalizeIntensityd,
-    EnsureChannelFirstd
-)
-import json
-import numpy as np
-from monai.data import (
-    DataLoader,
-    Dataset
-)
-
-import random
-
-
-def get_loader(args, configs):
-    data_list = json.load(open(args.data_list_file))
-    val_list = data_list['val']
-    val_transforms = [
-        LoadImaged(keys=["data", "seg"], reader="NibabelReader"),
-        EnsureChannelFirstd(keys=["data", "seg"]),
-        NormalizeIntensityd(
-            keys=["data"], subtrahend=configs['mean'], divisor=configs['std'])
-    ]
-    val_transforms = Compose(val_transforms)
-    val_ds = Dataset(data=val_list,
-                     transform=val_transforms)
-    val_loader = DataLoader(val_ds,
-                            batch_size=1,
-                            num_workers=4,
-                            shuffle=False,
-                            drop_last=False)
-
-    return val_loader
-
-
-def setup_seed(seed):
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    np.random.seed(seed)
-    random.seed(seed)
-    torch.backends.cudnn.deterministic = True
-
+from utils.ccfv import cal_variety, cal_w_distance
+from utils.utility import get_loader, setup_seed, load_pretrained_model
 
 def evaluate(configs, test_loader, model):
     model.eval()
@@ -117,28 +73,6 @@ def evaluate(configs, test_loader, model):
     print("ccfv:", ccfv)
 
 
-def cal_w_distance(f1, f2):
-    miu_f1 = np.mean(f1, axis=0)
-    miu_f2 = np.mean(f2, axis=0)
-    cov_f1 = np.cov(f1.T)
-    cov_f2 = np.cov(f2.T)
-    delta_miu = miu_f1 - miu_f2
-    w_d = np.sum(delta_miu**2) + cov_f1.trace() + cov_f2.trace() - \
-        2 * (sqrtm((cov_f1.dot(cov_f2)))).trace()
-
-    return np.sqrt(abs(w_d))
-
-
-def cal_variety(matrix):
-    eps = 1e-3
-    row_norms = np.sum(matrix * matrix, axis=1)
-    pairwise_inner_products = np.dot(matrix, matrix.T)
-    pairwise_distances_squared = np.expand_dims(
-        row_norms, axis=1) + np.expand_dims(row_norms, axis=0) - 2 * pairwise_inner_products
-    pairwise_distances = 1 / np.sqrt(pairwise_distances_squared+eps)
-    return np.sum(np.triu(pairwise_distances, k=1)) / len(pairwise_distances) / (len(pairwise_distances)-1) * 2
-
-
 def main():
     parser = argparse.ArgumentParser(description='PyTorch Evaluation')
     parser.add_argument('--data_list_file', type=str,
@@ -154,35 +88,13 @@ def main():
     print(configs)
     test_loader = get_loader(args, configs)
     model = get_model(args, configs)
-    # print(model)
-    pytorch_total_params = sum(p.numel()
-                               for p in model.parameters() if p.requires_grad)
-
-    print(f'Total parameters count {pytorch_total_params}')
     model.cuda()
 
     ckp_path = args.model_path
     if ckp_path != '':
-        try:
-            pretrained_dict = torch.load(ckp_path)['state_dict']
-            new_state_dict = {}
-            for k, value in pretrained_dict.items():
-                key = k
-                if key.startswith('module.'):
-                    key = key[7:]
-                new_state_dict[key] = value
-            model_dict = model.state_dict()
-            pretrained_dict = {k: v for k, v in new_state_dict.items() if
-                               (k in model_dict) and (model_dict[k].shape == new_state_dict[k].shape)}
-
-            for k, v in model_dict.items():
-                if k not in pretrained_dict.keys():
-                    print(k)
-            model_dict.update(pretrained_dict)
-            model.load_state_dict(model_dict)
-            print(f'loading checkpoint from {ckp_path}')
-        except:
-            print("Checkpoint does not exist!")
+        model = load_pretrained_model(ckp_path, model)
+    else:
+        print("Please provide the path to your checkpoint!")
     evaluate(configs, test_loader, model)
 
 

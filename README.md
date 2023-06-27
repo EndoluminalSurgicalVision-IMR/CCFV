@@ -25,6 +25,11 @@ and unetr at [here](https://pan.baidu.com/s/1EU0CzI2XnvsfHj84Q7gzTw)
 
 Code:v3p5
 
+## Usage
+
+
+To evaluate checkpoints pretrained on your own dataset, please change the layers in configs to match your model. And make sure the configs match your training setting. You can also use the ccfv based on features extracted by your own methods.
+
 ## Example
     bash run.sh
 
