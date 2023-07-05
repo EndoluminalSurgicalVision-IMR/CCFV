@@ -21,7 +21,7 @@ Official implementation of MICCAI 2023 paper "Pick The Best Pre-trained Model: T
 
 ## Checkpoint Download
 You can download our pretrained checkpoint of unet
-and unetr at [here](https://pan.baidu.com/s/1EU0CzI2XnvsfHj84Q7gzTw)
+and unetr from [Baidu Netdisk](https://pan.baidu.com/s/1EU0CzI2XnvsfHj84Q7gzTw) or [Google Drive](https://drive.google.com/file/d/1TFQla-ByBt3JpbiVQgcMwXqTGQJ05r2H/view?usp=drive_link)
 
 Code:v3p5
 
