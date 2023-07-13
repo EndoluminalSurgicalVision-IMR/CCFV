@@ -1,6 +1,6 @@
 # MICCAI2023_CCFV
 
-<img src="Figs/Framework.png" width = "980" height = "480" alt="" align=center />
+<img src="Figs/framework.png" width = "980" height = "480" alt="" align=center />
 
 # Introduction
 
