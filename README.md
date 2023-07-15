@@ -4,7 +4,7 @@
 
 # Introduction
 
-Official implementation of MICCAI 2023 paper "Pick The Best Pre-trained Model: Towards Transferability Estimation For Medical Image Segmentation"(**early accepted, 14%**)
+Official implementation of MICCAI 2023 paper "Pick The Best Pre-trained Model: Towards Transferability Estimation for Medical Image Segmentation"(**early accepted, 14%**)
 
 
 # Preparation
