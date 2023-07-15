@@ -57,7 +57,7 @@ def evaluate(configs, test_loader, model):
                     w_distance += cal_w_distance(
                         class_feature_dict[layer][lb][i], class_feature_dict[layer][lb][j])
             w_distance += w_distance / (length * length / 2) / configs["num_classes"]
-        ccfv += np.log(w_distance / var_f)
+        ccfv += np.log(var_f / w_distance)
 
     print("ccfv:", ccfv)
 
