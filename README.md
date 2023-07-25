@@ -6,7 +6,7 @@
 
 Official implementation of MICCAI 2023 paper "Pick The Best Pre-trained Model: Towards Transferability Estimation for Medical Image Segmentation"(**early accepted, 14%**)
 
-The full paper can be found [here](paper.pdf). 
+The full paper can be found [here](https://arxiv.org/pdf/2307.11958.pdf). 
 
 # Preparation
 ## Environment Setup
