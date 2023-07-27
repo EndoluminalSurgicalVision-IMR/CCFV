@@ -34,3 +34,14 @@ To evaluate checkpoints pretrained on your own dataset, please change the layers
 ## Example
     bash run.sh
 
+## Citation
+
+If you find this repo useful, please cite our paper
+```
+@article{yang2023pick,
+  title={Pick the Best Pre-trained Model: Towards Transferability Estimation for Medical Image Segmentation},
+  author={Yang, Yuncheng and Wei, Meng and He, Junjun and Yang, Jie and Ye, Jin and Gu, Yun},
+  journal={arXiv preprint arXiv:2307.11958},
+  year={2023}
+}
+```
